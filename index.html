@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>💘 Valentine 💘</title>
+<style>
+    body {
+        margin: 0;
+        padding: 20px;
+        font-family: Arial, sans-serif;
+        background: #ffe6eb;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+
+    img.main-gif {
+        max-width: 100%;
+        width: 350px;
+        border-radius: 12px;
+    }
+
+    h1 {
+        color: #d6336c;
+        margin: 20px 0;
+    }
+
+    .buttons {
+        display: flex;
+        gap: 15px;
+        flex-wrap: wrap;
+    }
+
+    button {
+        font-size: 18px;
+        padding: 12px 24px;
+        border-radius: 8px;
+        border: none;
+        cursor: pointer;
+        transition: transform 0.2s ease;
+    }
+
+    #yes {
+        background: #ff4d6d;
+        color: white;
+    }
+
+    #no {
+        background: #adb5bd;
+        color: white;
+    }
+
+    /* Modal */
+    .modal {
+        position: fixed;
+        inset: 0;
+        background: rgba(0,0,0,0.6);
+        display: none;
+        align-items: center;
+        justify-content: center;
+        z-index: 1000;
+    }
+
+    .modal-content {
+        background: white;
+        padding: 25px;
+        border-radius: 12px;
+        max-width: 90%;
+        text-align: center;
+        position: relative;
+    }
+
+    .modal img {
+        width: 100%;
+        max-width: 350px;
+        border-radius: 12px;
+    }
+
+    /* Confetti */
+    .confetti {
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        overflow: hidden;
+        z-index: 2000;
+    }
+
+    .confetti span {
+        position: absolute;
+        width: 10px;
+        height: 10px;
+        background: red;
+        animation: fall 3s linear infinite;
+    }
+
+    @keyframes fall {
+        0% {
+            transform: translateY(-10vh) rotate(0deg);
+            opacity: 1;
+        }
+        100% {
+            transform: translateY(110vh) rotate(360deg);
+            opacity: 0;
+        }
+    }
+</style>
+</head>
+<body>
+
+    <img src="assets/ak4vsb.gif" class="main-gif" alt="Valentine Gif">
+
+    <h1>Will you be my Valentine? 💕</h1>
+
+    <div class="buttons">
+        <button id="yes" onclick="yesClicked()">Yes 💖</button>
+        <button id="no" onclick="noClicked()">No 💔</button>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal" id="modal">
+        <div class="modal-content">
+            <h2>YAY!! 💘</h2>
+            <img src="assets/ak4wg7.gif" alt="Celebration Gif">
+            <p>Happy Valentine’s Day 💕</p>
+        </div>
+    </div>
+
+    <div class="confetti" id="confetti"></div>
+
+    <script>
+        let noCount = 0;
+        let yesScale = 1;
+        let noScale = 1;
+        
+        const noTexts = [
+            "this is the no option",
+            "this is the wrong option",
+            "wrong again",
+            "babe why are you doing this"
+        ];
+        
+        function yesClicked() {
+            document.getElementById("modal").style.display = "flex";
+            startConfetti();
+        }
+        
+        function noClicked() {
+            noCount++;
+        
+            const yesBtn = document.getElementById("yes");
+            const noBtn = document.getElementById("no");
+        
+            // Increase YES by 20% every time
+            yesScale += 0.2;
+            yesBtn.style.transform = `scale(${yesScale})`;
+        
+            // Reduce NO by 5% ONLY on first click
+            if (noCount === 1) {
+                noScale -= 0.05;
+                noBtn.style.transform = `scale(${noScale})`;
+            }
+        
+            // Change NO text (clicks 1–4)
+            if (noCount <= 4) {
+                noBtn.textContent = noTexts[noCount - 1];
+            }
+        
+            // On 5th click
+            if (noCount >= 5) {
+                noBtn.style.display = "none";
+                yesBtn.textContent = "Just click Yes 💖";
+            }
+        }
+        
+        function startConfetti() {
+            const confetti = document.getElementById("confetti");
+            confetti.innerHTML = "";
+        
+            for (let i = 0; i < 80; i++) {
+                const piece = document.createElement("span");
+                piece.style.left = Math.random() * 100 + "vw";
+                piece.style.backgroundColor = randomColor();
+                piece.style.animationDelay = Math.random() * 2 + "s";
+                confetti.appendChild(piece);
+            }
+        }
+        
+        function randomColor() {
+            const colors = ["#ff4d6d", "#ffd166", "#06d6a0", "#118ab2"];
+            return colors[Math.floor(Math.random() * colors.length)];
+        }
+    </script>        
+</body>
+</html>
